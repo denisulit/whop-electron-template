@@ -16,33 +16,22 @@ const IndexPage = () => {
 
   const initiateOauth = useCallback(() => {
     try {
-      if (onlineStatus === "online") {
-        router.push({ // note: fix this object
-          href: "https://whop.com/oauth",
-          query: {
-            client_id: process.env.client_id, // required, get from dash.whop.com in settings
-            redirect_uri: encodeURIComponent(process.env.redirect_uri)
-            /*
-            ** required
-            ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
-            */
-          }
-        })
-        toast({ variant: "error", message: "Error loading Whop OAuth" });
-      } else {
-        throw "Connection Error";
-      }
+      router.push({ // note: fix this object
+        pathname: "https://whop.com/oauth",
+        query: {
+          client_id: process.env.client_id, // required, get from dash.whop.com in settings
+          redirect_uri: encodeURIComponent(process.env.redirect_uri)
+          /*
+          ** required
+          ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
+          */
+        }
+      })
+      toast({ variant: "error", message: "Error loading Whop OAuth" });
     } catch (e) {
       alert("Unfortunately we we're unable to redirect you to Whop for authentication.")
     }
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      window.addEventListener('online', () => setOnlineStatus('online'));
-      window.addEventListener('offline', () => setOnlineStatus('offline'));
-    }
-  }, [])
 
   return (
     <Layout title="OAuth Example with Whop || TypeScript + Next.js + Electron">
