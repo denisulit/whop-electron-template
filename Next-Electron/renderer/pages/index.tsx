@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import Image from 'next/image'
@@ -8,28 +8,34 @@ import { useRouter } from 'next/router'
 import { useToasterContext } from '../contexts/ToasterContext'
 
 const IndexPage = () => {
+  const [onlineStatus, setOnlineStatus] = useState<'online' | 'offline' | null>(null);
+
+  window.addEventListener('online', () => setOnlineStatus('online'));
+  window.addEventListener('offline', () => setOnlineStatus('offline'));
+
   const router = useRouter();
 
   const { toast } = useToasterContext();
 
   const initiateOauth = useCallback(() => {
-
     try {
-      router.push({ // note: fix this object
-        href: "https://whop.com/oauth",
-        query: {
-          client_id: process.env.client_id, // required, get from dash.whop.com in settings
-          redirect_uri: encodeURIComponent(process.env.redirect_uri)
-          /*
-          ** required
-          ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
-          */
-        }
-      })
-      toast({ variant: "error", message: "Error loading Whop OAuth" });
-      //router.push('https://whop.com/oauth?client_id=&redirct_uri=');
+      if (onlineStatus === "online") {
+        router.push({ // note: fix this object
+          href: "https://whop.com/oauth",
+          query: {
+            client_id: process.env.client_id, // required, get from dash.whop.com in settings
+            redirect_uri: encodeURIComponent(process.env.redirect_uri)
+            /*
+            ** required
+            ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
+            */
+          }
+        })
+        toast({ variant: "error", message: "Error loading Whop OAuth" });
+      } else {
+        throw "Connection Error";
+      }
     } catch (e) {
-      //caught exception, maybe no internet 
       alert("Unfortunately we we're unable to redirect you to Whop for authentication.")
     }
   }, []);
