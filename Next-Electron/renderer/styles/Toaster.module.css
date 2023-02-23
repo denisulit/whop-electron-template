@@ -1,0 +1,40 @@
+.toaster {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.toasterProperties {
+    border-radius: 6px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.error {
+    background-color: #ff3333;
+}
+
+.success {
+    background-color: #5ec76c;
+}
+
+.open {
+    transform: translateY(20px);
+    animation: open 1s ease-in 2s both;
+}
+
+@keyframes open {
+    to {
+        bottom: 5%;
+    }
+}
+
+@keyframes close {
+    to {
+        bottom: 100%;
+    }
+}

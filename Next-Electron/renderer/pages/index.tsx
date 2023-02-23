@@ -1,17 +1,38 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Logo from '../utils/logo.svg'
 import { useRouter } from 'next/router'
+import { useToasterContext } from '../contexts/ToasterContext'
 
 const IndexPage = () => {
   const router = useRouter();
 
+  const { toast } = useToasterContext();
+
   const initiateOauth = useCallback(() => {
-    router.push('https://whop.com/oauth?client_id=&redirect_uri=', {})
-  }, [])
+
+    try {
+      router.push({ // note: fix this object
+        href: "https://whop.com/oauth",
+        query: {
+          client_id: process.env.client_id, // required, get from dash.whop.com in settings
+          redirect_uri: encodeURIComponent(process.env.redirect_uri)
+          /*
+          ** required
+          ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
+          */
+        }
+      })
+      toast({ variant: "error", message: "Error loading Whop OAuth" });
+      //router.push('https://whop.com/oauth?client_id=&redirct_uri=');
+    } catch (e) {
+      //caught exception, maybe no internet 
+      alert("Unfortunately we we're unable to redirect you to Whop for authentication.")
+    }
+  }, []);
 
   return (
     <Layout title="OAuth Example with Whop || TypeScript + Next.js + Electron">
@@ -33,7 +54,7 @@ const IndexPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <div onClick={initiateOauth} className={styles.card}>
+          <div onClick={initiateOauth} className={styles.card} style={{ cursor: "pointer" }}>
             <p>
               <Image src={Logo} alt="Whop Logo" width={72} height={16} />
               Sign in with Whop
