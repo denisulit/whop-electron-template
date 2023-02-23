@@ -19,15 +19,15 @@ const IndexPage = () => {
       router.push({ // note: fix this object
         pathname: "https://whop.com/oauth",
         query: {
-          client_id: process.env.client_id, // required, get from dash.whop.com in settings
-          redirect_uri: encodeURIComponent(process.env.redirect_uri)
+          client_id: process.env.NEXT_PUBLIC_CLIENT_ID, // required, get from dash.whop.com in settings
+          redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI
           /*
           ** required
           ** redirect to your api, in this example case that will be localhost:3000 defined in /API/index.ts
           */
         }
       })
-      toast({ variant: "error", message: "Error loading Whop OAuth" });
+      //toast({ variant: "error", message: "Error loading Whop OAuth" });
     } catch (e) {
       alert("Unfortunately we we're unable to redirect you to Whop for authentication.")
     }

@@ -1,19 +1,18 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import { Axios, AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 dotenv.config();
 
 const app: Express = express();
-const axiosClient = new Axios();
 const port = process.env.PORT;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/callback", (req: Request, res: Response) => {
   //Check required params
-  if (req.query.code && req.query.scope && req.query.state) {
+  if (req.query.code) {
     const requestOptions = {
       method: "POST",
       url: "https://data.whop.com/oauth/token",
@@ -25,16 +24,20 @@ app.get("/callback", (req: Request, res: Response) => {
         code: req.query.code,
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET,
+        redirect_uri: req.protocol + "://" + req.get("host") + req.path,
       },
     };
-    axiosClient
+
+    axios
       .request(requestOptions)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          res.status(200).json({
-            success: true,
-            data: response.data,
-          });
+          // Working object
+          //{"access_token":"","token_type":"Bearer","expires_in":,"refresh_token":"","scope":"api","created_at":}
+
+          res.redirect(
+            `http://localhost:8000/callback?access_token=${response.data.access_token}&expires_in=${response.data.expires_in}&refresh_token=${response.data.refresh_token}`
+          ); // go back to next app
         } else {
           console.error(response.data);
           res.status(400).json({
