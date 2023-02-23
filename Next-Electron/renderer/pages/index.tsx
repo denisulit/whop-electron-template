@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import Image from 'next/image'
@@ -9,9 +9,6 @@ import { useToasterContext } from '../contexts/ToasterContext'
 
 const IndexPage = () => {
   const [onlineStatus, setOnlineStatus] = useState<'online' | 'offline' | null>(null);
-
-  window.addEventListener('online', () => setOnlineStatus('online'));
-  window.addEventListener('offline', () => setOnlineStatus('offline'));
 
   const router = useRouter();
 
@@ -39,6 +36,13 @@ const IndexPage = () => {
       alert("Unfortunately we we're unable to redirect you to Whop for authentication.")
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      window.addEventListener('online', () => setOnlineStatus('online'));
+      window.addEventListener('offline', () => setOnlineStatus('offline'));
+    }
+  }, [])
 
   return (
     <Layout title="OAuth Example with Whop || TypeScript + Next.js + Electron">

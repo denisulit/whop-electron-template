@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import styles from "../styles/Toaster.module.scss";
+import styles from "../styles/Toaster.module.css";
 
 type ToasterType = {
     variant?: 'success' | 'error';
