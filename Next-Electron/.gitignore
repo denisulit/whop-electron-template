@@ -10,8 +10,10 @@
 
 # next.js
 /renderer/.next/
-/.next/
+*/.next/
 /out/
+
+/dist/
 
 # production
 /build
