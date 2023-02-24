@@ -2,6 +2,8 @@
   "private": true,
   "main": "main/index.js",
   "productName": "ElectronTypescriptNext",
+  "name": "whop-electron-oauth-typescript",
+  "version": "1.0.0",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",
