@@ -4,6 +4,10 @@
   "productName": "ElectronTypescriptNext",
   "name": "whop-electron-oauth-typescript",
   "version": "1.0.0",
+  "author": {
+    "name": "Denis Ulitskiy",
+    "url": "https://github.com/denisulit"
+  },
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",
