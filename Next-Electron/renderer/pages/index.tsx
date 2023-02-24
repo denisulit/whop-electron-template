@@ -6,10 +6,9 @@ import styles from '../styles/Home.module.css'
 import Logo from '../utils/logo.svg'
 import { useRouter } from 'next/router'
 import { useToasterContext } from '../contexts/ToasterContext'
+import AuthenticatedBlock from '../components/AuthenticatedBlock'
 
 const IndexPage = () => {
-  const [onlineStatus, setOnlineStatus] = useState<'online' | 'offline' | null>(null);
-
   const router = useRouter();
 
   const { toast } = useToasterContext();
@@ -59,6 +58,7 @@ const IndexPage = () => {
               Sign in with Whop
             </p>
           </div>
+          <AuthenticatedBlock />
         </div>
       </main>
 
