@@ -16,6 +16,7 @@ electron_1.app.on('ready', async () => {
     const mainWindow = new electron_1.BrowserWindow({
         width: 800,
         height: 600,
+        icon: (0, path_1.join)(__dirname, 'WhopLogo.icns'),
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: false,

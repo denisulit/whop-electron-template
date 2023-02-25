@@ -1,7 +1,7 @@
 {
   "private": true,
   "main": "main/index.js",
-  "productName": "ElectronTypescriptNext",
+  "productName": "Whop Electron OAuth Electron-Typescript Template",
   "name": "whop-electron-oauth-typescript",
   "version": "1.0.0",
   "author": {

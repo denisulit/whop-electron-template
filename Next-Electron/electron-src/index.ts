@@ -14,6 +14,7 @@ app.on('ready', async () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: join(__dirname, 'WhopLogo.icns'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: false,
