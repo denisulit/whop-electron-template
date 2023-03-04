@@ -15,7 +15,7 @@ const IndexPage = () => {
 
   const initiateOauth = useCallback(() => {
     try {
-      router.push({ // note: fix this object
+      router.push({
         pathname: "https://whop.com/oauth",
         query: {
           client_id: process.env.NEXT_PUBLIC_CLIENT_ID, // required, get from dash.whop.com in settings
